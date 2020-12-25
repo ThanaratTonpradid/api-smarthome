@@ -4,6 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AppConfig } from './configs';
+import { ConfigName } from './constants';
 import { AllExceptionsFilter } from './filters';
 import { AppModule } from './modules/app';
 import { validationPipeOptions } from './pipes';
@@ -13,7 +14,7 @@ const logger = new Logger('NestApplication');
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-  const { port, isProduction } = configService.get<AppConfig>('app');
+  const { port, isProduction } = configService.get<AppConfig>(ConfigName.APP);
   
   app.useGlobalPipes(new ValidationPipe(validationPipeOptions));
   app.useGlobalFilters(new AllExceptionsFilter());

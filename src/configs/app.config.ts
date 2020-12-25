@@ -1,5 +1,7 @@
 import { registerAs } from '@nestjs/config';
 
+import { ConfigName } from '../constants';
+
 import { isProduction } from './helper.config';
 
 export interface AppConfig {
@@ -9,7 +11,7 @@ export interface AppConfig {
 }
 
 export const appConfig = registerAs(
-  'app',
+  ConfigName.APP,
   (): AppConfig => ({
     port: parseInt(process.env.APP_PORT, 10) || 3000,
     isProduction: isProduction(process.env.NODE_ENV),
